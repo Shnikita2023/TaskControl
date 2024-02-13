@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 mypy = "^1.8.0"
 fastapi = "^0.109.2"
-uvicorn = {extras = ["standard"], version = "^0.27.1"}
+uvicorn = { extras = ["standard"], version = "^0.27.1" }
 flake8 = "^7.0.0"
 asyncpg = "^0.29.0"
 alembic = "^1.13.1"
@@ -42,8 +42,12 @@ exclude = [
     "venv",
     "pycache",
     "pg_data",
+    "docker-compose.yaml",
+    "LICENSE",
+    "Dockerfile",
     "docs",
     "README.md"
 ]
 max-line-length = 120
+ignore = ["A003", "VNE003", "I100"]
 max-complexity = 8
