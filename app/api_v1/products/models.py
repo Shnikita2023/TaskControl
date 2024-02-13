@@ -14,5 +14,5 @@ class Product(Base):
     is_aggregated: Mapped[bool]
     aggregated_at: Mapped[datetime]
 
-    party_id: Mapped[int] = mapped_column(ForeignKey(column="party_id"), unique=True)
+    party_id: Mapped[int] = mapped_column(ForeignKey(column="party.id"), unique=True)
     party = relationship("Party", back_populates="product")
