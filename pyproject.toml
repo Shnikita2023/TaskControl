@@ -52,5 +52,5 @@ exclude = [
     "README.md"
 ]
 max-line-length = 120
-ignore = ["A003", "VNE003", "I100"]
+ignore = ["A003", "VNE003", "I100", "I201"]
 max-complexity = 8

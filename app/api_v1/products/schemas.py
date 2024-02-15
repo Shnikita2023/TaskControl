@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from pydantic import BaseModel, Field
 
@@ -9,5 +9,9 @@ class ProductCreate(BaseModel):
     party_date: date = Field(validation_alias="ДатаПартии")
 
 
-
-
+class ProductShow(BaseModel):
+    id: int
+    part_id: int
+    code_product: str
+    is_aggregated: bool
+    aggregated_at: datetime
