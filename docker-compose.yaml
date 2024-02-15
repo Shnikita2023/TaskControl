@@ -29,6 +29,19 @@ services:
     networks:
       - custom
 
+  database_test:
+    image: postgres:latest
+    restart: always
+    container_name: "database_test"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=task_bd_test
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5461:5432"
+    networks:
+      - custom
+
 networks:
   custom:
     driver: bridge

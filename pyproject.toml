@@ -20,6 +20,7 @@ flake8-variables-names = "^0.0.6"
 flake8-import-order = "^0.18.2"
 flake8-pyproject = "^1.2.3"
 pydantic-settings = "^2.1.0"
+httpx = "^0.26.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
