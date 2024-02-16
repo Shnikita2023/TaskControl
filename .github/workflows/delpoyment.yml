@@ -1,7 +1,7 @@
 name: Deploy TaskControl
 on:
   push:
-    branches: [ main ]
+    branches: [ github_feature ]
   pull_request:
     branches: [ main ]
 
@@ -27,7 +27,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
       - name: Start Docker Compose
-        uses: docker/compose-action@v3
+      - uses: docker/compose-action@v3
+      - uses: isbang/compose-action@v1.5.1
         with:
           compose-file: docker-compose.yml
           service: database_test
