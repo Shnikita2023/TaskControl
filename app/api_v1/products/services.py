@@ -69,7 +69,7 @@ class ProductService:
             raise HTTPException(status_code=400, detail="batch is closed")
 
         if existing_product.is_aggregated:
-            raise HTTPException(status_code=400, detail=f"unique code already used at aggregated_at")
+            raise HTTPException(status_code=400, detail="unique code already used at aggregated_at")
 
         new_state_is_aggregated = {
             "is_aggregated": True,

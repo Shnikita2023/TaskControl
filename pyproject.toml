@@ -43,7 +43,7 @@ exclude = [
     ".env.example",
     "venv",
     "pycache",
-    "mypy_cache",
+    "pytest_cache",
     "pg_data",
     "alembic",
     "docker-compose.yaml",
@@ -51,8 +51,9 @@ exclude = [
     "LICENSE",
     "Dockerfile",
     "docs",
-    "README.md"
+    "README.md",
+    "github"
 ]
 max-line-length = 120
-ignore = ["A003", "VNE003", "I100", "I201"]
+ignore = ["A003", "VNE003", "I100", "I201", "B008"]
 max-complexity = 8

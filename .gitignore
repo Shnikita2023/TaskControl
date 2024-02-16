@@ -4,5 +4,4 @@ __pycache__/
 .idea/
 .pytest_cache
 .vscode/
-.mypy_cache
 pg_data

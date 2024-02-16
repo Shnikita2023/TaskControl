@@ -1,0 +1,42 @@
+name: Deploy TaskControl
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v4
+      - name: Install python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install pipx
+        run: |
+          pip install pipx
+          pipx ensurepath
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Start Docker Compose
+        uses: docker/compose-action@v3
+        with:
+          compose-file: docker-compose.yml
+          service: database_test
+          detach: true
+      - name: Delay for database initialization
+        run: sleep 10
+      - name: Test app
+        run: poetry run pytest -v
+      - name: Test linter
+        run: poetry run flake8 .
+
+

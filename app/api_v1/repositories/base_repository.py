@@ -1,25 +1,25 @@
 from abc import ABC, abstractmethod
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
-from sqlalchemy import Result, insert, select, update
+from sqlalchemy import Result, select, update
 from sqlalchemy.exc import InvalidRequestError, ProgrammingError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 
+from app.api_v1.parties.models import Party
+from app.api_v1.products.models import Product
+
 
 class AbstractRepository(ABC):
-    @abstractmethod
-    async def add_one(self, data: dict):
-        raise NotImplementedError
 
     @abstractmethod
     async def add_all(self, data: list):
         raise NotImplementedError
 
     @abstractmethod
-    async def find_one_by_join(self, id_data: int):
+    async def find_one_by_join(self, id_data: int, field_join: str):
         raise NotImplementedError
 
     @abstractmethod
@@ -48,22 +48,13 @@ class AbstractRepository(ABC):
 
 
 class SQLAlchemyRepository(AbstractRepository):
-    model = None
-    error_500_by_bd = "Что-то пошло не так, попробуйте позже"
-    error_400_by_type = "Проверьте корректность вводимых данных"
+    ModelType = Union[Product, Party]
+    model: Optional[ModelType] = None
+    error_500_by_bd: str = "Что-то пошло не так, попробуйте позже"
+    error_400_by_type: str = "Проверьте корректность вводимых данных"
 
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
-
-    async def add_one(self, data: dict) -> int:
-        try:
-            stmt = insert(self.model).values(**data).returning(self.model.id)
-            result: Result = await self.session.execute(stmt)
-            await self.session.commit()
-            return result.scalar_one()
-
-        except ConnectionError:
-            raise HTTPException(status_code=500, detail=self.error_500_by_bd)
 
     async def add_all(self, data: list) -> None:
         try:
@@ -77,8 +68,7 @@ class SQLAlchemyRepository(AbstractRepository):
         try:
             query = select(self.model).filter_by(**kwargs)
             result: Result = await self.session.execute(query)
-            model_orm: Optional[SQLAlchemyRepository.model] = result.scalar_one_or_none()
-            return model_orm
+            return result.scalar_one_or_none()
 
         except ConnectionError:
             raise HTTPException(status_code=500, detail=self.error_500_by_bd)
@@ -90,8 +80,8 @@ class SQLAlchemyRepository(AbstractRepository):
                                 limit: int) -> list[dict[str, Any]]:
         try:
             query = select(self.model).filter_by(**{param_column: value}).offset(offset).limit(limit)
-            result = await self.session.execute(query)
-            list_models = [jsonable_encoder(model[0]) for model in result.all()]
+            result: Result = await self.session.execute(query)
+            list_models: list = [jsonable_encoder(model[0]) for model in result.all()]
             return list_models
 
         except ConnectionError:
@@ -102,18 +92,17 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def find_one(self, id_data: int) -> Optional[model]:
         try:
-            model_orm: Optional[SQLAlchemyRepository.model] = await self.session.get(self.model, id_data)
-            return model_orm
+            return await self.session.get(self.model, id_data)
 
         except ConnectionError:
             raise HTTPException(status_code=500, detail=self.error_500_by_bd)
 
-    async def find_one_by_join(self, party_id: int) -> Optional[model]:
+    async def find_one_by_join(self, id_data: int, field_join: str) -> Optional[model]:
         try:
-            query = select(self.model).options(selectinload(self.model.products)).where(self.model.id == party_id)
+            column_join = getattr(self.model, field_join)
+            query = select(self.model).options(selectinload(column_join)).where(self.model.id == id_data)
             result: Result = await self.session.execute(query)
-            model_orm: Optional[SQLAlchemyRepository.model] = result.unique().scalar_one_or_none()
-            return model_orm
+            return result.unique().scalar_one_or_none()
 
         except ConnectionError:
             raise HTTPException(status_code=500, detail=self.error_500_by_bd)

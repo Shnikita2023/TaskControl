@@ -1,4 +1,4 @@
-from httpx import Response, AsyncClient
+from httpx import AsyncClient, Response
 
 from tests.test_data import parties, parties_answer, updated_parties, updated_parties_filter
 

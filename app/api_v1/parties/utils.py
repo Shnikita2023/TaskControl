@@ -19,7 +19,7 @@ def check_type_value_party(value_party: str) -> Union[str, int, None, bool, date
         str: str
     }
 
-    for type_, conversions_func in type_conversions.items():
+    for _, conversions_func in type_conversions.items():
         try:
             return conversions_func(value_party)
         except (ValueError, TypeError):

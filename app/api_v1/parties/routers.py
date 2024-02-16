@@ -53,6 +53,3 @@ async def get_parties_by_filter(value_party: str = Depends(check_type_value_part
                                                      value_party=value_party,
                                                      offset=offset,
                                                      limit=limit)
-
-
-

@@ -56,4 +56,3 @@ class PartyUpdate(BaseModel):
     rc_identifier: Optional[str] = Field(default=None)
     shift_start_datetime: Optional[datetime] = Field(default=None)
     shift_end_datetime: Optional[datetime] = Field(default=None)
-

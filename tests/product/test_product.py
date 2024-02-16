@@ -1,5 +1,5 @@
 import pytest
-from httpx import Response, AsyncClient
+from httpx import AsyncClient, Response
 
 from tests.test_data import products
 
@@ -34,4 +34,3 @@ class TestProduct:
 
         assert response_party.status_code == status_code
         assert response_party.json()["detail"] == error
-

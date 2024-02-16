@@ -63,7 +63,9 @@ class PartyService:
     @staticmethod
     async def get_party(session: AsyncSession, party_id: int) -> PartyShow:
         """Получение партии со связанной продукции"""
-        existing_model_party: None | Party = await PartyRepository(session=session).find_one_by_join(party_id=party_id)
+        existing_model_party: None | Party = (await PartyRepository(session=session).
+                                              find_one_by_join(id_data=party_id,
+                                                               field_join="products"))
 
         if not existing_model_party:
             raise HTTPException(status_code=404, detail="not found id party")

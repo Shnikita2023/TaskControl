@@ -14,4 +14,4 @@ class ProductShow(BaseModel):
     part_id: int
     code_product: str
     is_aggregated: bool
-    aggregated_at: datetime
+    aggregated_at: datetime | None
