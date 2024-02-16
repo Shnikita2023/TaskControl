@@ -35,7 +35,7 @@ services:
     container_name: "database_test"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=task_bd_test
+      - POSTGRES_DB=task_db_test
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5461:5432"

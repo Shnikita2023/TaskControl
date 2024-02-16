@@ -32,6 +32,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+addopts = "-p no:warnings"
 pythonpath = [".", "app"]
 asyncio_mode = "auto"
 
