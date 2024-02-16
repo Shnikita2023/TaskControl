@@ -1,4 +1,4 @@
-name: Deploy taskcontrol
+name: Deploy TaskControl
 on:
   push:
     branches: [ github_feature ]
@@ -23,7 +23,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name | lower }}:latest
 #    strategy:
 #      matrix:
 #        python-version: [3.11]
