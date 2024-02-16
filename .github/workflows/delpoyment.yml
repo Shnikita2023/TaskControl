@@ -1,4 +1,4 @@
-name: Deploy TaskControl
+name: Deploy taskcontrol
 on:
   push:
     branches: [ github_feature ]
