@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
       - name: Start Docker Compose
-        uses: docker/compose-action@v3
+        uses: isbang/compose-action@v1.5.1
         with:
           compose-file: docker-compose.yaml
           service: database_test
