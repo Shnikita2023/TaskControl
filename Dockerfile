@@ -18,3 +18,5 @@ COPY . .
 CMD ["bash", "./docker_script/app.sh"]
 
 
+
+

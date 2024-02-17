@@ -6,7 +6,7 @@ authors = ["Никита Швейцер <shveitcer2023@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.10, <4.0"
 mypy = "^1.8.0"
 fastapi = "^0.109.2"
 uvicorn = { extras = ["standard"], version = "^0.27.1" }

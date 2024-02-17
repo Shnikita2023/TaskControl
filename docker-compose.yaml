@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   app:
     build:
       context: .
@@ -46,3 +45,6 @@ services:
 networks:
   custom:
     driver: bridge
+
+
+
