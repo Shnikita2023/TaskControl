@@ -1,6 +1,6 @@
 # Cистема контроля заданий на выпуск продукции
 
-[![Build status](https://github.com/Shnikita2023/TestActions/actions/workflows/deployment.yml/badge.svg?branch=main)](https://github.com/Shnikita2023/TestActions/actions/workflows/deployment.yml)
+[![Build status](https://github.com/Shnikita2023/taskcontrol/actions/workflows/delpoyment.yml/badge.svg?branch=main)](https://github.com/Shnikita2023/taskcontrol/actions/workflows/delpoyment.yml)
 
 
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
@@ -87,7 +87,12 @@
 
 ##### 5) Скопировать данный проект в свой созданный репозиторий
 
-##### 7) CI/CD будет запускаться на ваш любой push или pull_request в main ветку, можно изменить в deployment.yml
+##### 6) Сделать push или pull_request в main ветку своего репозитория
+    --- Запуститься процесс CI/CD
+
+##### 7) Образом моего проекта, вы можете воспользоваться командой:
+    docker pull nikitapython/taskcontrol:latest
+
 
 
 
