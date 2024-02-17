@@ -1,6 +1,6 @@
 # Cистема контроля заданий на выпуск продукции
 
-[![Build status](https://github.com/Shnikita2023/taskcontrol/actions/workflows/delpoyment.yml/badge.svg?branch=main)](https://github.com/Shnikita2023/taskcontrol/actions/workflows/delpoyment.yml)
+[![Build status](https://github.com/Shnikita2023/taskcontrol/actions/workflows/deployment.yml/badge.svg?branch=main)](https://github.com/Shnikita2023/taskcontrol/actions/workflows/deployment.yml)
 
 
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
