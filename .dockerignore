@@ -3,5 +3,3 @@ __pycache__
 .idea/
 .pytest_cache
 .vscode/
-pg_data
-.env
