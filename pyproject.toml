@@ -21,6 +21,7 @@ flake8-import-order = "^0.18.2"
 flake8-pyproject = "^1.2.3"
 pydantic-settings = "^2.1.0"
 httpx = "^0.26.0"
+gunicorn = "^21.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
@@ -52,7 +53,8 @@ exclude = [
     "Dockerfile",
     "docs",
     "README.md",
-    "github"
+    "github",
+    "docker_script"
 ]
 max-line-length = 120
 ignore = ["A003", "VNE003", "I100", "I201", "B008"]

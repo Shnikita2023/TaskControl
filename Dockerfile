@@ -15,6 +15,6 @@ RUN poetry install --no-root --no-interaction --no-ansi
 
 COPY . .
 
-
+CMD ["bash", "./docker_script/app.sh"]
 
 
