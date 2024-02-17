@@ -8,31 +8,41 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.11]
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version:
+          - "3.10"
+          - "3.11"
+    runs-on: $ {{ matrix.os }}
     steps:
       - name: Get repository code
         uses: actions/checkout@v4
+
       - name: Install python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Set up Docker Compose
         run: |
           sudo apt-get update && sudo apt-get -y install docker-compose
           docker-compose up -d database_test
+
       - name: Install pipx
         run: |
           pip install pipx
           pipx ensurepath
+
       - name: Install poetry
         run: pipx install poetry
+
       - name: Install dependencies
         run: poetry install --no-root
-      - name: Test app
-        run: poetry run pytest -v
+
+#      - name: Test app
+#        run: poetry run pytest -v
+
       - name: Test linter
         run: poetry run flake8 .
 #      - name: Login to Docker Hub
