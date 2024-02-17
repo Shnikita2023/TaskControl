@@ -8,13 +8,12 @@ on:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version:
           - "3.10"
           - "3.11"
-    runs-on: $ {{ matrix.os }}
     steps:
       - name: Get repository code
         uses: actions/checkout@v4
