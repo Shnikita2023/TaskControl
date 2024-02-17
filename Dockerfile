@@ -15,6 +15,8 @@ RUN poetry install --no-root --no-interaction --no-ansi
 
 COPY . .
 
-CMD ["bash", "./docker_script/app.sh"]
+RUN apt-get update && apt-get install -y docker-compose
+
+CMD ["sh", "-c", "docker-compose.yaml up && ./docker_script/app.sh"]
 
 
