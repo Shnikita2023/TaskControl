@@ -43,7 +43,7 @@ class PartyService:
         return list_party_add, list_party_update
 
     @classmethod
-    async def add_party(cls, session: AsyncSession, parties: list[PartyCreate]) -> None:
+    async def add_party(cls, session: AsyncSession, parties: list[PartyCreate]) -> dict:
         """Добавление партии"""
         list_party_add, list_party_update = await cls._prepary_party_data(session=session, parties=parties)
 
@@ -53,7 +53,7 @@ class PartyService:
         if list_party_update:
             await PartyRepository(session=session).update_all(data=list_party_update)
 
-        return None
+        return {"message": "the batch has been successfully added or has been modified"}
 
     @staticmethod
     async def check_existing_model_party(session: AsyncSession, params_party: dict) -> Party | None:

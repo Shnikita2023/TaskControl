@@ -15,7 +15,7 @@ def check_type_value_party(value_party: str) -> Union[str, int, None, bool, date
     type_conversions = {
         int: int,
         date: lambda value: datetime.strptime(value, "%Y-%m-%d").date(),
-        datetime: lambda value: datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f %z"),
+        datetime: lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f%z"),
         str: str
     }
 

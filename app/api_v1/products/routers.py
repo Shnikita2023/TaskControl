@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette import status
 
 from app.api_v1.products.schemas import ProductCreate
 from app.api_v1.products.services import product_service
@@ -13,12 +13,10 @@ router_product = APIRouter(
 
 
 @router_product.post(path="/",
-                     summary="Добавления продукции для сменного задания (партии)",
-                     status_code=status.HTTP_201_CREATED)
+                     summary="Добавления продукции для сменного задания (партии)")
 async def add_product(products: list[ProductCreate],
-                      session: AsyncSession = Depends(get_async_session)) -> dict:
-    await product_service.add_product(session=session, products=products)
-    return {"message": "the request was completed successfully"}
+                      session: AsyncSession = Depends(get_async_session)) -> JSONResponse:
+    return await product_service.add_product(session=session, products=products)
 
 
 @router_product.get(path="/",

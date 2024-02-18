@@ -9,7 +9,7 @@ class TestParty:
     async def test_create_party(self, async_client: AsyncClient) -> None:
         response_party: Response = await async_client.post(url="/api/v1/parties/", json=parties)
         assert response_party.status_code == 201
-        assert response_party.json() == {"message": "the request was completed successfully"}
+        assert response_party.json() == {"message": "the batch has been successfully added or has been modified"}
 
     async def test_get_party(self, async_client: AsyncClient) -> None:
         response_party: Response = await async_client.get(url="/api/v1/parties/1")

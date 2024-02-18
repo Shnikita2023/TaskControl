@@ -20,8 +20,7 @@ router_party = APIRouter(
                    status_code=status.HTTP_201_CREATED)
 async def create_party(parties: list[PartyCreate],
                        session: AsyncSession = Depends(get_async_session)) -> dict:
-    await party_service.add_party(session=session, parties=parties)
-    return {"message": "the request was completed successfully"}
+    return await party_service.add_party(session=session, parties=parties)
 
 
 @router_party.get(path="/{party_id}",

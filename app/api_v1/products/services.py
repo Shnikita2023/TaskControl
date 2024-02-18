@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from fastapi import HTTPException
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api_v1.parties.models import Party
@@ -44,12 +45,16 @@ class ProductService:
         return list_products
 
     @classmethod
-    async def add_product(cls, session: AsyncSession, products: list[ProductCreate]) -> None:
+    async def add_product(cls, session: AsyncSession, products: list[ProductCreate]) -> JSONResponse:
         """Добавление продукции"""
         list_new_products: list[Product] = await cls._prepary_product_data(session=session, products=products)
 
         if list_new_products:
             await ProductRepository(session=session).add_all(data=list_new_products)
+
+            return JSONResponse({"message": "the request was completed successfully"}, status_code=201)
+
+        return JSONResponse({"message": "the product does not match or has already been added"}, status_code=200)
 
     @classmethod
     async def check_aggregation_product(cls, session: AsyncSession, code_product: str, party_id: int) -> dict:
