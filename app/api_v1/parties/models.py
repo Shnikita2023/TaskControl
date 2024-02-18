@@ -9,10 +9,13 @@ from app.db.database import Base
 
 class Party(Base):
     """Модель партии"""
+
     __tablename__ = "party"
 
     status_closed: Mapped[bool]
-    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
+    closed_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), default=None
+    )
     task_description: Mapped[str]
     line: Mapped[str]
     shift: Mapped[str]
@@ -46,5 +49,5 @@ class Party(Base):
             rc_identifier=self.rc_identifier,
             shift_start_datetime=self.shift_start_datetime,
             shift_end_datetime=self.shift_end_datetime,
-            products=products
+            products=products,
         )

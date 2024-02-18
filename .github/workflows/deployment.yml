@@ -42,6 +42,11 @@ jobs:
       - name: Test app
         run: poetry run pytest -v
 
+      - name: Format code with isort and black
+        run: |   
+          poetry run isort .
+          poetry run black .
+
       - name: Test linter
         run: poetry run flake8 .
 

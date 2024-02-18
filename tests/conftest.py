@@ -3,20 +3,26 @@ from typing import AsyncGenerator
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.pool import NullPool
 from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import (
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
+from sqlalchemy.pool import NullPool
 
+from app.config import settings
 from app.db.database import Base, async_session_maker, get_async_session
 from app.main import app
-from app.config import settings
 
 # DATABASE
 DATABASE_URL_TEST: str = settings.db.database_test_url_asyncpg
 
 engine_test: AsyncEngine = create_async_engine(DATABASE_URL_TEST, poolclass=NullPool)
-async_session_maker_test: async_sessionmaker[AsyncSession] = async_sessionmaker(engine_test, class_=AsyncSession,
-                                                                                expire_on_commit=False)
+async_session_maker_test: async_sessionmaker[AsyncSession] = async_sessionmaker(
+    engine_test, class_=AsyncSession, expire_on_commit=False
+)
 Base.metadata.bind = engine_test
 
 

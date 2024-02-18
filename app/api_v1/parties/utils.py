@@ -2,7 +2,9 @@ from datetime import date, datetime
 from typing import Union
 
 
-def check_type_value_party(value_party: str) -> Union[str, int, None, bool, date, datetime]:
+def check_type_value_party(
+    value_party: str,
+) -> Union[str, int, None, bool, date, datetime]:
     """Проверка значение на его тип"""
     value_party = value_party.strip()
 
@@ -16,7 +18,7 @@ def check_type_value_party(value_party: str) -> Union[str, int, None, bool, date
         int: int,
         date: lambda value: datetime.strptime(value, "%Y-%m-%d").date(),
         datetime: lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f%z"),
-        str: str
+        str: str,
     }
 
     for _, conversions_func in type_conversions.items():
