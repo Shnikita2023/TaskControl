@@ -3,21 +3,21 @@ from pydantic_settings import SettingsConfigDict
 
 
 class DbSettings(BaseSettings):
-    DB_HOST: str = "localhost"
-    DB_PORT: int = 5460
-    DB_NAME: str = "task_db"
-    DB_USER: str = "postgres"
-    DB_PASS: str = "postgres"
+    DB_HOST: str
+    DB_PORT: int
+    DB_NAME: str
+    DB_USER: str
+    DB_PASS: str
 
-    DB_HOST_TEST: str = "localhost"
-    DB_PORT_TEST: int = 5461
-    DB_NAME_TEST: str = "task_db_test"
-    DB_USER_TEST: str = "postgres"
-    DB_PASS_TEST: str = "postgres"
+    DB_HOST_TEST: str
+    DB_PORT_TEST: int
+    DB_NAME_TEST: str
+    DB_USER_TEST: str
+    DB_PASS_TEST: str
 
-    POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_DB: str = "task_db"
+    POSTGRES_PASSWORD: str
+    POSTGRES_USER: str
+    POSTGRES_DB: str
 
     @property
     def database_url_asyncpg(self) -> str:
