@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api_v1 import router as router_v1
 
 
-app = FastAPI(docs_url="/api/docs", debug=True, title="FastAPI TaskControlSystem")
+app = FastAPI(docs_url="/api/docs", title="FastAPI TaskControlSystem")
 
 app.include_router(router_v1, prefix="/api/v1")
 
