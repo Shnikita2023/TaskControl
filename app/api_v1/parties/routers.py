@@ -1,32 +1,29 @@
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from app.api_v1.parties.schemas import PartyCreate, PartyShow, PartyUpdate
+from app.api_v1.parties.schemas import PartyCreate
+from app.api_v1.parties.schemas import PartyShow
+from app.api_v1.parties.schemas import PartyUpdate
 from app.api_v1.parties.services import party_service
 from app.api_v1.parties.utils import check_type_value_party
 from app.db.database import get_async_session
 
+
 router_party = APIRouter(prefix="/parties", tags=["Parties"])
 
 
-@router_party.post(
-    path="/", summary="Создание сменного задание", status_code=status.HTTP_201_CREATED
-)
-async def create_party(
-    parties: list[PartyCreate], session: AsyncSession = Depends(get_async_session)
-) -> dict:
+@router_party.post(path="/", summary="Создание сменного задание", status_code=status.HTTP_201_CREATED)
+async def create_party(parties: list[PartyCreate], session: AsyncSession = Depends(get_async_session)) -> dict:
     return await party_service.add_party(session=session, parties=parties)
 
 
-@router_party.get(
-    path="/{party_id}", summary="Получение сменного задание", response_model=PartyShow
-)
-async def get_party(
-    party_id: int, session: AsyncSession = Depends(get_async_session)
-) -> PartyShow:
+@router_party.get(path="/{party_id}", summary="Получение сменного задание", response_model=PartyShow)
+async def get_party(party_id: int, session: AsyncSession = Depends(get_async_session)) -> PartyShow:
     return await party_service.get_party(session=session, party_id=party_id)
 
 
@@ -40,9 +37,7 @@ async def update_party(
     new_party: PartyUpdate,
     session: AsyncSession = Depends(get_async_session),
 ) -> PartyUpdate:
-    return await party_service.update_party(
-        session=session, new_party=new_party, party_id=party_id
-    )
+    return await party_service.update_party(session=session, new_party=new_party, party_id=party_id)
 
 
 @router_party.get(path="/", summary="Получение сменных заданий по различным фильтрам")

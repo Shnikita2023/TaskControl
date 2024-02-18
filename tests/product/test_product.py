@@ -1,5 +1,6 @@
 import pytest
-from httpx import AsyncClient, Response
+from httpx import AsyncClient
+from httpx import Response
 
 from tests.test_data import products
 
@@ -23,9 +24,7 @@ class TestProduct:
         error_message: str,
     ) -> None:
         """Создание продукции"""
-        response_party: Response = await async_client.post(
-            url="/api/v1/products/", json=list_products
-        )
+        response_party: Response = await async_client.post(url="/api/v1/products/", json=list_products)
         assert response_party.status_code == status_code
         assert response_party.json() == {"message": f"{error_message}"}
 

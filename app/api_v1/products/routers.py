@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Query
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -6,12 +8,11 @@ from app.api_v1.products.schemas import ProductCreate
 from app.api_v1.products.services import product_service
 from app.db.database import get_async_session
 
+
 router_product = APIRouter(prefix="/products", tags=["Products"])
 
 
-@router_product.post(
-    path="/", summary="Добавления продукции для сменного задания (партии)"
-)
+@router_product.post(path="/", summary="Добавления продукции для сменного задания (партии)")
 async def add_product(
     products: list[ProductCreate], session: AsyncSession = Depends(get_async_session)
 ) -> JSONResponse:

@@ -17,9 +17,7 @@ class ProductService:
     """Cервис для работы с продукции"""
 
     @classmethod
-    async def _prepary_product_data(
-        cls, session: AsyncSession, products: list[ProductCreate]
-    ) -> list[Product]:
+    async def _prepary_product_data(cls, session: AsyncSession, products: list[ProductCreate]) -> list[Product]:
         """Подготовка данных перед добавлением продукции"""
         list_products: list[Product] = []
         for product in products:
@@ -34,10 +32,8 @@ class ProductService:
             if existing_product:
                 continue
 
-            existing_party: Optional[Party] = (
-                await party_service.check_existing_model_party(
-                    session=session, params_party=params_party
-                )
+            existing_party: Optional[Party] = await party_service.check_existing_model_party(
+                session=session, params_party=params_party
             )
             if existing_party:
                 dict_new_product: dict = {
@@ -51,20 +47,14 @@ class ProductService:
         return list_products
 
     @classmethod
-    async def add_product(
-        cls, session: AsyncSession, products: list[ProductCreate]
-    ) -> JSONResponse:
+    async def add_product(cls, session: AsyncSession, products: list[ProductCreate]) -> JSONResponse:
         """Добавление продукции"""
-        list_new_products: list[Product] = await cls._prepary_product_data(
-            session=session, products=products
-        )
+        list_new_products: list[Product] = await cls._prepary_product_data(session=session, products=products)
 
         if list_new_products:
             await ProductRepository(session=session).add_all(data=list_new_products)
 
-            return JSONResponse(
-                {"message": "the request was completed successfully"}, status_code=201
-            )
+            return JSONResponse({"message": "the request was completed successfully"}, status_code=201)
 
         return JSONResponse(
             {"message": "the product does not match or has already been added"},
@@ -72,9 +62,7 @@ class ProductService:
         )
 
     @classmethod
-    async def check_aggregation_product(
-        cls, session: AsyncSession, code_product: str, party_id: int
-    ) -> dict:
+    async def check_aggregation_product(cls, session: AsyncSession, code_product: str, party_id: int) -> dict:
         """Проверка агрегации продукции"""
         existing_product: Optional[Product] = await cls._check_existing_product(
             session=session, code_product=code_product
@@ -84,21 +72,15 @@ class ProductService:
             raise HTTPException(status_code=404, detail="not found product")
 
         if existing_product.party_id != party_id:
-            raise HTTPException(
-                status_code=400, detail="unique code is attached to another batch"
-            )
+            raise HTTPException(status_code=400, detail="unique code is attached to another batch")
 
-        existing_party: Optional[Party] = await PartyRepository(
-            session=session
-        ).find_one(id_data=party_id)
+        existing_party: Optional[Party] = await PartyRepository(session=session).find_one(id_data=party_id)
 
         if existing_party.status_closed:
             raise HTTPException(status_code=400, detail="batch is closed")
 
         if existing_product.is_aggregated:
-            raise HTTPException(
-                status_code=400, detail="unique code already used at aggregated_at"
-            )
+            raise HTTPException(status_code=400, detail="unique code already used at aggregated_at")
 
         new_state_is_aggregated = {
             "is_aggregated": True,
@@ -111,13 +93,9 @@ class ProductService:
         return {"code_product": model_product.code_product}
 
     @staticmethod
-    async def _check_existing_product(
-        session: AsyncSession, code_product: str
-    ) -> Optional[Product]:
+    async def _check_existing_product(session: AsyncSession, code_product: str) -> Optional[Product]:
         """Проверка уже существующей продукции"""
-        return await ProductRepository(session=session).find_one_by_params(
-            **{"code_product": code_product}
-        )
+        return await ProductRepository(session=session).find_one_by_params(**{"code_product": code_product})
 
 
 product_service: ProductService = ProductService()

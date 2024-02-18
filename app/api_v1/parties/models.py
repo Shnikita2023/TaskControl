@@ -1,7 +1,11 @@
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 
-from sqlalchemy import DateTime, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import DateTime
+from sqlalchemy import UniqueConstraint
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
 
 from app.api_v1.parties.schemas import PartyShow
 from app.db.database import Base
@@ -13,9 +17,7 @@ class Party(Base):
     __tablename__ = "party"
 
     status_closed: Mapped[bool]
-    closed_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), default=None
-    )
+    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
     task_description: Mapped[str]
     line: Mapped[str]
     shift: Mapped[str]

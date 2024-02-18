@@ -4,17 +4,18 @@ from typing import AsyncGenerator
 import pytest
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from sqlalchemy.ext.asyncio import AsyncEngine
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.pool import NullPool
 
 from app.config import settings
-from app.db.database import Base, async_session_maker, get_async_session
+from app.db.database import Base
+from app.db.database import async_session_maker
+from app.db.database import get_async_session
 from app.main import app
+
 
 # DATABASE
 DATABASE_URL_TEST: str = settings.db.database_test_url_asyncpg

@@ -1,6 +1,8 @@
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 
 class ProductCreate(BaseModel):

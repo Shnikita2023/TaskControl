@@ -1,7 +1,10 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import DateTime
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
 
 from app.api_v1.products.schemas import ProductShow
 from app.db.database import Base
@@ -14,13 +17,9 @@ class Product(Base):
 
     code_product: Mapped[str] = mapped_column(unique=True)
     is_aggregated: Mapped[bool] = mapped_column(default=False)
-    aggregated_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), default=None
-    )
+    aggregated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
 
-    party_id: Mapped[int] = mapped_column(
-        ForeignKey(column="party.id", ondelete="CASCADE")
-    )
+    party_id: Mapped[int] = mapped_column(ForeignKey(column="party.id", ondelete="CASCADE"))
     party = relationship("Party", back_populates="products")
 
     def to_read_model(self) -> ProductShow:

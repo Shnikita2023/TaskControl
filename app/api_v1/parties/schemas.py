@@ -1,7 +1,10 @@
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import Field
 
 from app.api_v1.products.schemas import ProductShow
 
